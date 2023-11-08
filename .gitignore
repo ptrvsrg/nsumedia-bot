@@ -288,4 +288,8 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+### Develop ###
+src/main/resources/dev.properties
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/java,jetbrains+all,intellij+all,maven,gradle,linux,windows,macos
