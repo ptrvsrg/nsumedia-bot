@@ -1,4 +1,4 @@
-package com.example.model.responses;
+package ru.nsu.ccfit.nsumediabot.models.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HttpErrorResponse {
+public class YandexDiskErrorResponse {
     private String message;
     private String description;
     private String error;

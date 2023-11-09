@@ -1,4 +1,4 @@
-package com.example.model.responses;
+package ru.nsu.ccfit.nsumediabot.models.responses;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUrlSuccessResponse {
+public class GetUploadUrlResponse {
     @JsonAlias({"operation_id"})
     private String operationID;
     private String href;
