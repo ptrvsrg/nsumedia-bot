@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.nsumediabot.service;
+package ru.nsu.ccfit.nsumediabot.services;
 
 import java.io.File;
 

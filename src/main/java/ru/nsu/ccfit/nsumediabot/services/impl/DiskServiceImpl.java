@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.nsumediabot.service.impl;
+package ru.nsu.ccfit.nsumediabot.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.*;
@@ -10,7 +10,7 @@ import ru.nsu.ccfit.nsumediabot.models.exceptions.DiskException;
 import ru.nsu.ccfit.nsumediabot.models.responses.FileInfoResponse;
 import ru.nsu.ccfit.nsumediabot.models.responses.GetUploadUrlResponse;
 import ru.nsu.ccfit.nsumediabot.models.responses.DiskErrorResponse;
-import ru.nsu.ccfit.nsumediabot.service.DiskService;
+import ru.nsu.ccfit.nsumediabot.services.DiskService;
 
 import java.io.File;
 import java.io.IOException;

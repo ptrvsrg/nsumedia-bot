@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.nsumediabot.service.impl;
+package ru.nsu.ccfit.nsumediabot.services.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import ru.nsu.ccfit.nsumediabot.models.exceptions.MailException;
-import ru.nsu.ccfit.nsumediabot.service.MailService;
+import ru.nsu.ccfit.nsumediabot.services.MailService;
 
 import java.util.Map;
 
