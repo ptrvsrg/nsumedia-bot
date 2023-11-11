@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PublishFileResponse {
+
     private String href;
     private String method;
     private boolean templated;
-
 }

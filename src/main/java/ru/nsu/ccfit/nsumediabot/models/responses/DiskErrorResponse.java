@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class YandexDiskErrorResponse {
+public class DiskErrorResponse {
+
     private String message;
     private String description;
     private String error;
     private String reason;
     private Integer limit;
-
 }

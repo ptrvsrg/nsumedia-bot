@@ -1,11 +1,13 @@
 package ru.nsu.ccfit.nsumediabot.models.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,30 +16,38 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileInfoResponse {
-    private String public_key;
-    private Embedded _embedded;
+
+    @JsonProperty("antivirus_status")
+    private String antivirusStatus;
+    @JsonProperty("public_key")
+    private String publicKey;
+    @JsonProperty("public_url")
+    private String publicUrl;
     private String name;
-    private String created;
-    private Map<String, String> custom_properties;
-    private String public_url;
-    private String modified;
-    private String path;
-    private String type;
-    private String antivirus_status;
     private Map<String, String> exif;
+    private Date created;
     private Integer size;
-    private String resource_id;
-    private Map<String, String> comment_ids;
-    private String private_source;
-    private String pub;
-    private String mime_type;
+    @JsonProperty("resource_id")
+    private String resourceId;
+    private Date modified;
+    @JsonProperty("mime_type")
+    private String mimeType;
+    @JsonProperty("comment_ids")
+    private Map<String, String> commentIds;
+    private List<Preview> sizes;
     private String file;
-    private String media_type;
+    @JsonProperty("media_type")
+    private String mediaType;
+    private String preview;
+    private String path;
     private String sha256;
+    private String type;
     private String md5;
     private String revision;
-    private ArrayList<Preview> sizes;
-    private String preview;
+    @JsonProperty("_embedded")
+    private Embedded embedded;
+    @JsonProperty("custom_properties")
+    private Map<String, String> customProperties;
 
     @Getter
     @Setter
@@ -49,7 +59,6 @@ public class FileInfoResponse {
         private List<Item> items;
         private int limit;
         private int offset;
-
     }
 
     @Getter
@@ -64,9 +73,9 @@ public class FileInfoResponse {
         private String created;
         private String preview;
         private String md5;
-        private String mime_type;
+        @JsonProperty("mime_type")
+        private String mimeType;
         private Integer size;
-
     }
 
     @Getter
