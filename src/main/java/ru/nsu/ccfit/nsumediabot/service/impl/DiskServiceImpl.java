@@ -41,11 +41,11 @@ public class DiskServiceImpl
     public String uploadFile(String path, File file) {
         createPath(path);
         String uploadUrl = getUploadUrl(path);
+
         Request request = new Request.Builder()
                 .url(uploadUrl)
                 .put(RequestBody.create(null, file))
                 .build();
-
         try {
             Response response = httpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
@@ -56,7 +56,9 @@ public class DiskServiceImpl
         }
 
         publishFile(path);
-        return getFileInfo(path);
+        String publicUrl = getFileInfo(path);
+        log.info("File {} is uploaded to disk", path);
+        return publicUrl;
     }
 
     @Override
@@ -80,6 +82,8 @@ public class DiskServiceImpl
         } catch (IOException e) {
             throw new DiskException(e.getLocalizedMessage());
         }
+
+        log.info("File {} is deleted from disk", path);
     }
 
     private DiskErrorResponse mapToErrorResponse(Response response) {
