@@ -39,9 +39,9 @@ public class MailServiceImpl implements MailService {
 
             mailSender.send(mimeMessage);
             log.info("Letter \"{}\" was sent to {}", subject, to);
-        } catch (MessagingException exception) {
-            log.error("Mail error", exception.getLocalizedMessage());
-            throw new MailException(exception.getLocalizedMessage());
+        } catch (MessagingException e) {
+            log.error("Mail error", e);
+            throw new MailException(e.getLocalizedMessage());
         }
     }
 
