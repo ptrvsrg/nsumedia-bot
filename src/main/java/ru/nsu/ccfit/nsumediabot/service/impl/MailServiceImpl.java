@@ -46,14 +46,16 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendActivationMessage(String email, String token) {
+    public void sendActivationMessage(String to, String token) {
         Context context = new Context();
 
-        context.setVariables(Map.of("username", email,
-                "token", token));
+        context.setVariables(Map.of(
+                "username", to,
+                "token", token
+        ));
 
-        String htmlText = templateEngine.process("get-account-token", context);
-        sendMessage(email, "Welcome and take activation token", htmlText);
+        String htmlText = templateEngine.process("welcome-activation-account", context);
+        sendMessage(to, "Welcome and Activate account", htmlText);
     }
 
 }
