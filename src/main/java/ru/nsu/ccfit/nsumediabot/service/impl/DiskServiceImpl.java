@@ -31,7 +31,7 @@ public class DiskServiceImpl
     private static final String GET_FILE_INFO_URL = "https://cloud-api.yandex.net/v1/disk/resources";
     private static final String DELETE_FILE_URL = "https://cloud-api.yandex.net/v1/disk/resources";
 
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient httpClient;
     private final ObjectMapper objectMapper;
 
     @Value("${yandex.disk.api.token}")
@@ -47,7 +47,7 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
@@ -73,7 +73,7 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
@@ -124,7 +124,7 @@ public class DiskServiceImpl
                     .build();
 
             try {
-                Response response = client.newCall(request)
+                Response response = httpClient.newCall(request)
                         .execute();
                 if (!response.isSuccessful()) {
                     DiskErrorResponse diskErrorResponse = mapToErrorResponse(response);
@@ -151,7 +151,7 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = client.newCall(request)
+            Response response = httpClient.newCall(request)
                     .execute();
             if (response.isSuccessful()) {
                 return mapToSuccessResponse(response, GetUploadUrlResponse.class).getHref();
@@ -175,7 +175,7 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
@@ -197,7 +197,7 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 return mapToSuccessResponse(response, FileInfoResponse.class).getPublicUrl();
             }
