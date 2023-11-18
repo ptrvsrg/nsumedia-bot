@@ -6,7 +6,6 @@ services:
         env_file:
             - ./.env
         ports:
-            - "8080:8080"
             - "465:465"
         networks:
             - nsumedia-bot-net
@@ -20,8 +19,6 @@ services:
             - ./.env
         environment:
             POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-        ports:
-            - "5432:5432"
         volumes:
             - "nsumedia-bot-db-data:/var/lib/postgresql/data"
         networks:
