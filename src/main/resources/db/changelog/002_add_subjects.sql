@@ -2,7 +2,7 @@ WITH specialization_id AS (SELECT s.id
                            FROM specializations s
                            WHERE s.name = 'Программная инженерия и компьютерные науки')
 INSERT
-INTO subjects(name, semesters, specialization_id)
+INTO subjects(name, semester, specialization_id)
 VALUES ('Алгебра и геометрия', 1, (SELECT id FROM specialization_id)),
        ('Алгоритмы и структуры данных', 1, (SELECT id FROM specialization_id)),
        ('Иностранный язык', 1, (SELECT id FROM specialization_id)),
