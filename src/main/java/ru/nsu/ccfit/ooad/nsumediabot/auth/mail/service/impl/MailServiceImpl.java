@@ -54,7 +54,7 @@ public class MailServiceImpl implements MailService {
                 "token", token
         ));
 
-        String htmlText = templateEngine.process("welcome-activation-account", context);
+        String htmlText = templateEngine.process("activation-account", ctx);
         sendMessage(to, "Welcome and Activate account", htmlText);
     }
 
