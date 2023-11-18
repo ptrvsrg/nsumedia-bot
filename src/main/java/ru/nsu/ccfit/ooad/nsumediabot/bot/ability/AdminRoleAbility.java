@@ -246,7 +246,6 @@ public class AdminRoleAbility
 
                     try {
                         materialService.addMaterial(materialDto, materialFile);
-                        bot.silent().send(MessageUtils.SUCCESS_ADD_MATERIAL, AbilityUtils.getChatId(upd));
                     } catch (MaterialAlreadyExistsException e) {
                         bot.silent().send(MessageUtils.MATERIAL_ALREADY_EXISTS, AbilityUtils.getChatId(upd));
                         materialFile.delete();
