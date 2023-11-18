@@ -47,7 +47,7 @@ public class MessageUtils {
     public static final String SUBJECT_NOT_FOUND = "Такого предмета нет";
     public static final String MATERIAL_NOT_FOUND = "Такого материала нет";
     public static final String MATERIALS_NOT_FOUND = "Материала нет";
-    public static final String ACTIVATION_TOKEN_NOT_FOUND = "Такого токена нет";
+    public static final String ACTIVATION_TOKEN_NOT_FOUND = "Такого токена нет, или ваш токен просрочен";
     public static final String ADMINS_NOT_FOUND = "Администраторы не обнаружены";
     public static final String USER_ALREADY_EXISTS = "Пользователь с таким email уже существует";
     public static final String MATERIAL_ALREADY_EXISTS = "Материал с таким названием уже существует";
