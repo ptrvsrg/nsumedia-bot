@@ -1,4 +1,5 @@
-package ru.nsu.ccfit.nsumediabot.services.impl;
+package ru.nsu.ccfit.ooad.nsumediabot.auth.mail.service.impl;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -6,19 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import ru.nsu.ccfit.nsumediabot.models.exceptions.MailException;
-import ru.nsu.ccfit.nsumediabot.services.MailService;
+import ru.nsu.ccfit.ooad.nsumediabot.auth.mail.exception.MailException;
+import ru.nsu.ccfit.ooad.nsumediabot.auth.mail.service.MailService;
 
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MailServiceImpl implements MailService {
+public class MailServiceImpl
+        implements MailService {
 
     private final TemplateEngine templateEngine;
     private final JavaMailSender mailSender;
@@ -26,8 +27,19 @@ public class MailServiceImpl implements MailService {
     @Value("${spring.mail.username}")
     private String from;
 
-    @Async
-    public void sendMessage(String to, String subject, String text) {
+    @Override
+    public void sendActivationMessage(String to, String token) {
+        Context ctx = new Context();
+        ctx.setVariables(Map.of(
+                "username", to,
+                "token", token
+        ));
+
+        String htmlText = templateEngine.process("activation-account", ctx);
+        sendMessage(to, "Активация аккаунта в боте NSUMedia", htmlText);
+    }
+
+    private void sendMessage(String to, String subject, String text) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -44,19 +56,5 @@ public class MailServiceImpl implements MailService {
             throw new MailException();
         }
     }
-
-    @Override
-    public void sendActivationMessage(String to, String token) {
-        Context context = new Context();
-
-        context.setVariables(Map.of(
-                "username", to,
-                "token", token
-        ));
-
-        String htmlText = templateEngine.process("activation-account", ctx);
-        sendMessage(to, "Welcome and Activate account", htmlText);
-    }
-
 }
 
