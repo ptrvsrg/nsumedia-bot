@@ -38,5 +38,23 @@ CREATE TABLE materials
     link       VARCHAR(255)                            NOT NULL,
     CONSTRAINT pk_materials PRIMARY KEY (id),
     CONSTRAINT fk_materials_on_subject_id FOREIGN KEY (subject_id) REFERENCES subjects (id) ON DELETE CASCADE,
-    CONSTRAINT fk_materials_on_disk_file_id FOREIGN KEY (disk_file_id) REFERENCES disk_files (id) ON DELETE CASCADE
+    CONSTRAINT check_materials_on_name CHECK ( LENGTH(name) > 0 )
+);
+
+CREATE TABLE users
+(
+    chat_id BIGINT       NOT NULL,
+    email   VARCHAR(255) NOT NULL UNIQUE,
+    role    VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (chat_id),
+    CONSTRAINT check_users_on_email CHECK ( email LIKE '%_@__%.__%' )
+);
+
+CREATE TABLE activation_tokens
+(
+    user_id      BIGINT       NOT NULL,
+    token        VARCHAR(255) NOT NULL UNIQUE,
+    expired_time TIMESTAMP    NOT NULL,
+    CONSTRAINT pk_activation_tokens PRIMARY KEY (user_id),
+    CONSTRAINT fk_activation_tokens_on_user_id FOREIGN KEY (user_id) REFERENCES users (chat_id) ON DELETE CASCADE
 );
