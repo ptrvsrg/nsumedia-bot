@@ -32,8 +32,8 @@ public class MaterialServiceImpl
 
     @Override
     @Transactional(readOnly = true)
-    public List<MaterialDto> loadAllMaterialsBySubject(SubjectDto subjectDto) {
-        return materialRepository.findAllBySubject(
+    public List<MaterialDto> loadAllMaterials(SubjectDto subjectDto) {
+        return materialRepository.findAll(
                         subjectDto.getSpecializationName(), subjectDto.getSemester(), subjectDto.getName())
                 .stream()
                 .map(material -> modelMapper.map(material, MaterialDto.class))

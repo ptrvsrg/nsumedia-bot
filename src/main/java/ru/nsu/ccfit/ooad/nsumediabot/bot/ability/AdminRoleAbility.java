@@ -232,7 +232,7 @@ public class AdminRoleAbility
                             .name(subjectName)
                             .build();
 
-                    List<String> materials = materialService.loadAllMaterialsBySubject(subjectDto)
+                    List<String> materials = materialService.loadAllMaterials(subjectDto)
                             .stream()
                             .map(MaterialDto::getName)
                             .toList();

@@ -12,7 +12,7 @@ public interface MaterialRepository
 
     @Query("SELECT m FROM Material m WHERE m.subject.specialization.name = :specializationName AND " +
             "m.subject.semester = :semester AND m.subject.name = :subjectName ORDER BY m.name ASC ")
-    List<Material> findAllBySubject(@Param("specializationName") String specializationName,
+    List<Material> findAll(@Param("specializationName") String specializationName,
             @Param("semester") Integer semester,
             @Param("subjectName") String subjectName);
 

@@ -60,7 +60,7 @@ public class AllUserRoleAbility
                     subjectDto.setSpecializationName(specializationName);
 
                     StringBuilder messageBuilder = new StringBuilder();
-                    materialService.loadAllMaterialsBySubject(subjectDto)
+                    materialService.loadAllMaterials(subjectDto)
                             .forEach(materialDto -> {
                                 messageBuilder.append("+ [");
                                 messageBuilder.append(materialDto.getName());

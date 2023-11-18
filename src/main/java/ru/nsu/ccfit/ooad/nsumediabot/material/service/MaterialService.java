@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MaterialService {
 
-    List<MaterialDto> loadAllMaterialsBySubject(SubjectDto subjectDto);
+    List<MaterialDto> loadAllMaterials(SubjectDto subjectDto);
 
     void addMaterial(MaterialDto materialDto, File file);
 

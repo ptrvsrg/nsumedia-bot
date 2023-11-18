@@ -19,7 +19,7 @@ public class SubjectServiceImpl
 
     @Override
     public List<SubjectDto> loadAllSubjects(String specializationName, Integer semester) {
-        return subjectRepository.findAllBySpecializationAndSemester(specializationName, semester)
+        return subjectRepository.findAll(specializationName, semester)
                 .stream()
                 .map(subject -> modelMapper.map(subject, SubjectDto.class))
                 .toList();

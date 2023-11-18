@@ -12,7 +12,7 @@ public interface SubjectRepository
 
     @Query("SELECT sub FROM Subject sub WHERE sub.specialization.name = :specializationName AND " +
             "sub.semester = :semester ORDER BY sub.name ASC")
-    List<Subject> findAllBySpecializationAndSemester(@Param("specializationName") String specializationName,
+    List<Subject> findAll(@Param("specializationName") String specializationName,
             @Param("semester") Integer semester);
 
     @Query("SELECT sub FROM Subject sub WHERE sub.specialization.name = :specializationName AND " +
