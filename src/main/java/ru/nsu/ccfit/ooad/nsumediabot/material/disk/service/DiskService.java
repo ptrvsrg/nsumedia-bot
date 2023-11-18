@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.nsumediabot.services;
+package ru.nsu.ccfit.ooad.nsumediabot.material.disk.service;
 
 import java.io.File;
 
