@@ -4,7 +4,8 @@ CREATE TABLE specializations
     name  VARCHAR(255)                            NOT NULL UNIQUE,
     years INTEGER                                 NOT NULL,
     CONSTRAINT pk_specialization PRIMARY KEY (id),
-    CHECK ( years >= 1 AND years <= 6 )
+    CONSTRAINT check_specializations_on_name CHECK ( LENGTH(name) > 0 ),
+    CONSTRAINT check_specializations_on_years CHECK ( years >= 1 AND years <= 6 )
 );
 
 CREATE FUNCTION get_specialization_semesters(specializationId BIGINT)
