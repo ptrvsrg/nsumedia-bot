@@ -18,6 +18,28 @@
     <groupId>ru.nsu.ccfit.nsumedia-bot</groupId>
     <artifactId>nsumedia-bot</artifactId>
     <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>NSUMedia Bot</name>
+    <description>
+        Telegram bot that provides students with convenient access to educational materials organized by courses,
+        semesters and disciplines
+    </description>
+
+    <developers>
+        <developer>
+            <id>ptrvsrg</id>
+            <name>Sergey Petrov</name>
+            <email>s.petrov1@g.nsu.ru</email>
+            <url>https://github.com/ptrvsrg</url>
+        </developer>
+        <developer>
+            <id>vitalioo</id>
+            <name>Vitaliy Avdeev</name>
+            <email>v.avdeev@g.nsu.ru</email>
+            <url>https://github.com/vitalioo</url>
+        </developer>
+    </developers>
 
     <dependencies>
         <!-- Telegram -->
