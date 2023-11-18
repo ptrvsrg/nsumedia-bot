@@ -7,20 +7,9 @@ CREATE TABLE specializations
     CHECK ( years >= 1 AND years <= 6 )
 );
 
--- CREATE FUNCTION get_specialization_semesters(specializationId INTEGER)
---     RETURNS INTEGER AS
--- $get_specialization_semesters$
--- BEGIN
---     RETURN (SELECT spec.years
---             FROM subjects sub
---                      JOIN specialization spec ON sub.specialization_id = spec.id
---             WHERE spec.id = specializationId
---             LIMIT 1);
--- END;
--- $get_specialization_semesters$
---     LANGUAGE plpgsql;
-
-CREATE FUNCTION get_specialization_semesters(specializationId INTEGER) RETURNS INTEGER AS
+CREATE FUNCTION get_specialization_semesters(specializationId BIGINT)
+    RETURNS BIGINT
+AS
 '
     SELECT spec.years
     FROM specializations spec
