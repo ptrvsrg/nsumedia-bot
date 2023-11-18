@@ -1,16 +1,16 @@
-package ru.nsu.ccfit.nsumediabot.services.impl;
+package ru.nsu.ccfit.ooad.nsumediabot.material.disk.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.nsu.ccfit.nsumediabot.models.exceptions.DiskException;
-import ru.nsu.ccfit.nsumediabot.models.responses.FileInfoResponse;
-import ru.nsu.ccfit.nsumediabot.models.responses.GetUploadUrlResponse;
-import ru.nsu.ccfit.nsumediabot.models.responses.DiskErrorResponse;
-import ru.nsu.ccfit.nsumediabot.services.DiskService;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.exception.DiskException;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.response.DiskErrorResponse;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.response.FileInfoResponse;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.response.GetUploadUrlResponse;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.service.DiskService;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,14 +24,15 @@ import java.util.Objects;
 public class DiskServiceImpl
         implements DiskService {
 
-    private static final String DIRECTORY_ALREADY_EXISTS_RESPONSE = "DiskPathPointsToExistentDirectoryError";
+    private static final String FILE_ALREADY_EXISTS_RESPONSE = "DiskPathPointsToExistentDirectoryError";
+    private static final String FILE_NOT_FOUND_RESPONSE = "DiskNotFoundError";
     private static final String CREATE_DIRECTORY_URL = "https://cloud-api.yandex.net/v1/disk/resources";
     private static final String GET_UPLOAD_URL_URL = "https://cloud-api.yandex.net/v1/disk/resources/upload";
     private static final String PUBLISH_FILE_URL = "https://cloud-api.yandex.net/v1/disk/resources/publish";
     private static final String GET_FILE_INFO_URL = "https://cloud-api.yandex.net/v1/disk/resources";
     private static final String DELETE_FILE_URL = "https://cloud-api.yandex.net/v1/disk/resources";
 
-    private final OkHttpClient httpClient;
+    private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
 
     @Value("${yandex.disk.api.token}")
@@ -40,6 +41,7 @@ public class DiskServiceImpl
     @Override
     public String uploadFile(String path, File file) {
         createPath(path);
+
         String uploadUrl = getUploadUrl(path);
 
         Request request = new Request.Builder()
@@ -47,17 +49,18 @@ public class DiskServiceImpl
                 .put(RequestBody.create(null, file))
                 .build();
         try {
-            Response response = httpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
 
         publishFile(path);
-        String publicUrl = getFileInfo(path);
-        log.info("File {} is uploaded to disk", path);
+
+        String publicUrl = getPublicUrl(path);
+        log.info("File {} uploaded to disk", path);
         return publicUrl;
     }
 
@@ -75,15 +78,15 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = httpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
 
-        log.info("File {} is deleted from disk", path);
+        log.info("File {} deleted from disk", path);
     }
 
     private DiskErrorResponse mapToErrorResponse(Response response) {
@@ -93,7 +96,7 @@ public class DiskServiceImpl
                     DiskErrorResponse.class
             );
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -101,7 +104,7 @@ public class DiskServiceImpl
         try {
             return objectMapper.readValue(response.body().string(), clazz);
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -128,16 +131,16 @@ public class DiskServiceImpl
                     .build();
 
             try {
-                Response response = httpClient.newCall(request)
+                Response response = okHttpClient.newCall(request)
                         .execute();
                 if (!response.isSuccessful()) {
                     DiskErrorResponse diskErrorResponse = mapToErrorResponse(response);
-                    if (!Objects.equals(diskErrorResponse.getError(), DIRECTORY_ALREADY_EXISTS_RESPONSE)) {
+                    if (!Objects.equals(diskErrorResponse.getError(), FILE_ALREADY_EXISTS_RESPONSE)) {
                         throw new DiskException(diskErrorResponse.getMessage());
                     }
                 }
             } catch (IOException e) {
-                throw new DiskException(e.getLocalizedMessage());
+                throw new RuntimeException(e);
             }
         }
     }
@@ -155,14 +158,14 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = httpClient.newCall(request)
+            Response response = okHttpClient.newCall(request)
                     .execute();
             if (response.isSuccessful()) {
                 return mapToSuccessResponse(response, GetUploadUrlResponse.class).getHref();
             }
             throw new DiskException(mapToErrorResponse(response).getMessage());
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -179,16 +182,16 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = httpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 throw new DiskException(mapToErrorResponse(response).getMessage());
             }
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
     }
 
-    private String getFileInfo(String path) {
+    private String getPublicUrl(String path) {
         URL url = HttpUrl.parse(GET_FILE_INFO_URL)
                 .newBuilder()
                 .addQueryParameter("path", path)
@@ -201,13 +204,13 @@ public class DiskServiceImpl
                 .build();
 
         try {
-            Response response = httpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 return mapToSuccessResponse(response, FileInfoResponse.class).getPublicUrl();
             }
             throw new DiskException(mapToErrorResponse(response).getMessage());
         } catch (IOException e) {
-            throw new DiskException(e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
     }
 }
