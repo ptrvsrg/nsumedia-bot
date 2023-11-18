@@ -48,7 +48,7 @@
         <!-- Telegram -->
         <dependency>
             <groupId>org.telegram</groupId>
-            <artifactId>telegrambots</artifactId>
+            <artifactId>telegrambots-abilities</artifactId>
             <version>${telegrambots.version}</version>
         </dependency>
 
