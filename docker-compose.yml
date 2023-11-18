@@ -5,8 +5,6 @@ services:
         container_name: "nsumedia-bot-app"
         env_file:
             - ./.env
-        ports:
-            - "465:465"
         networks:
             - nsumedia-bot-net
         depends_on:
