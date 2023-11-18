@@ -1,6 +1,6 @@
-package ru.nsu.ccfit.nsumediabot.configs;
+package ru.nsu.ccfit.ooad.nsumediabot.config;
 
-import com.squareup.okhttp.OkHttpClient;
+import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class HttpClientConfig {
 
     @Bean
-    public OkHttpClient httpClient() {
+    public OkHttpClient okHttpClient() {
         return new OkHttpClient();
     }
 }
