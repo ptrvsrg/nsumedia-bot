@@ -91,47 +91,6 @@ public class AdminRoleAbility
                 upd -> DbUtils.isNewMessage(abilityBot.db(), upd),
                 Flag.DOCUMENT
         );
-        ReplyFlow pinFileReply = ReplyFlow.builder(abilityBot.db())
-                .onlyIf(upd -> DbUtils.isNewMessage(abilityBot.db(), upd))
-                .onlyIf(Flag.TEXT)
-                .action((bot, upd) -> {
-                    DbUtils.putNewMessage(bot.db(), upd);
-
-                    String materialName = upd.getMessage().getText();
-                    DbUtils.putMaterialNameToUserMap(bot.db(), AbilityUtils.getChatId(upd), materialName);
-
-                    bot.silent().execute(
-                            SendMessage.builder()
-                                    .text(MessageUtils.PIN_FILE)
-                                    .chatId(AbilityUtils.getChatId(upd))
-                                    .replyMarkup(KeyboardFactory.cancelKeyboard())
-                                    .build()
-                    );
-                })
-                .next(addMaterialResultReply)
-                .next(ReplyFactory.cancelReply())
-                .build();
-        ReplyFlow inputMaterialNameReply = ReplyFlow.builder(abilityBot.db())
-                .onlyIf(Flag.TEXT)
-                .onlyIf(upd -> DbUtils.isValidSubject(abilityBot.db(), AbilityUtils.getChatId(upd),
-                        upd.getMessage().getText()))
-                .action((bot, upd) -> {
-                    DbUtils.putNewMessage(bot.db(), upd);
-
-                    String subjectName = upd.getMessage().getText();
-                    DbUtils.putSubjectToUserMap(bot.db(), AbilityUtils.getChatId(upd), subjectName);
-
-                    bot.silent().execute(
-                            SendMessage.builder()
-                                    .text(MessageUtils.INPUT_MATERIAL_NAME)
-                                    .chatId(AbilityUtils.getChatId(upd))
-                                    .replyMarkup(KeyboardFactory.cancelKeyboard())
-                                    .build()
-                    );
-                })
-                .next(pinFileReply)
-                .next(ReplyFactory.cancelReply())
-                .build();
         return ReplyFlow.builder(abilityBot.db())
                 .onlyIf(Flag.TEXT)
                 .onlyIf(upd -> MessageUtils.messageEquals(upd, "/add_material"))
@@ -140,7 +99,7 @@ public class AdminRoleAbility
                         specializationService,
                         subjectService,
                         upd -> checkRole(AbilityUtils.getChatId(upd)),
-                        inputMaterialNameReply
+                        ReplyFactory.inputMaterialReply(abilityBot.db(), addMaterialResultReply)
                 ))
                 .next(noAccessReply())
                 .build();
@@ -287,7 +246,6 @@ public class AdminRoleAbility
 
                     try {
                         materialService.addMaterial(materialDto, materialFile);
-                        bot.silent().send(MessageUtils.SUCCESS_ADD_MATERIAL, AbilityUtils.getChatId(upd));
                     } catch (MaterialAlreadyExistsException e) {
                         bot.silent().send(MessageUtils.MATERIAL_ALREADY_EXISTS, AbilityUtils.getChatId(upd));
                         materialFile.delete();

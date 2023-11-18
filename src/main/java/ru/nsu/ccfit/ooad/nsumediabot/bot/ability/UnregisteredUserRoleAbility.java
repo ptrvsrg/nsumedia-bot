@@ -50,7 +50,7 @@ public class UnregisteredUserRoleAbility
                         authService.register(authDto);
                         bot.silent().send(MessageUtils.SUCCESS_REGISTER, AbilityUtils.getChatId(upd));
                     } catch (EmailNotValidException e) {
-                        bot.silent().send(e.getMessage(), AbilityUtils.getChatId(upd));
+                        bot.silent().send(MessageUtils.EMAIL_NOT_VALID, AbilityUtils.getChatId(upd));
                     } catch (UserAlreadyExistsException e) {
                         bot.silent().send(MessageUtils.USER_ALREADY_EXISTS, AbilityUtils.getChatId(upd));
                     } catch (MailException e) {

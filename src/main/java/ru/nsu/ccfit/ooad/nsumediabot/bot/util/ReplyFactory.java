@@ -195,4 +195,50 @@ public class ReplyFactory {
                 .next(cancelReply())
                 .build();
     }
+
+    ////// Input material //////
+
+    public static ReplyFlow inputMaterialReply(DBContext db, Reply next) {
+        ReplyFlow pinFileReply = ReplyFlow.builder(db)
+                .onlyIf(upd -> DbUtils.isNewMessage(db, upd))
+                .onlyIf(Flag.TEXT)
+                .action((bot, upd) -> {
+                    DbUtils.putNewMessage(bot.db(), upd);
+
+                    String materialName = upd.getMessage().getText();
+                    DbUtils.putMaterialNameToUserMap(bot.db(), AbilityUtils.getChatId(upd), materialName);
+
+                    bot.silent().execute(
+                            SendMessage.builder()
+                                    .text(MessageUtils.PIN_FILE)
+                                    .chatId(AbilityUtils.getChatId(upd))
+                                    .replyMarkup(KeyboardFactory.cancelKeyboard())
+                                    .build()
+                    );
+                })
+                .next(next)
+                .next(ReplyFactory.cancelReply())
+                .build();
+        return ReplyFlow.builder(db)
+                .onlyIf(Flag.TEXT)
+                .onlyIf(upd -> DbUtils.isValidSubject(db, AbilityUtils.getChatId(upd),
+                        upd.getMessage().getText()))
+                .action((bot, upd) -> {
+                    DbUtils.putNewMessage(bot.db(), upd);
+
+                    String subjectName = upd.getMessage().getText();
+                    DbUtils.putSubjectToUserMap(bot.db(), AbilityUtils.getChatId(upd), subjectName);
+
+                    bot.silent().execute(
+                            SendMessage.builder()
+                                    .text(MessageUtils.INPUT_MATERIAL_NAME)
+                                    .chatId(AbilityUtils.getChatId(upd))
+                                    .replyMarkup(KeyboardFactory.cancelKeyboard())
+                                    .build()
+                    );
+                })
+                .next(pinFileReply)
+                .next(ReplyFactory.cancelReply())
+                .build();
+    }
 }

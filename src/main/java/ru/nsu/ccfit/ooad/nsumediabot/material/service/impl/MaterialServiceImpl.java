@@ -89,7 +89,7 @@ public class MaterialServiceImpl
         path.append("/");
         path.append((materialDto.getSubjectSemester() + 1) / 2);
         path.append("/");
-        path.append(materialDto.getSubjectSemester() % 2);
+        path.append((materialDto.getSubjectSemester() + 1) % 2 + 1);
         path.append("/");
         path.append(materialDto.getSubjectName());
         path.append("/");
