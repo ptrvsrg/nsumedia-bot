@@ -124,47 +124,6 @@ public class RegisteredUserRoleAbility
                 upd -> DbUtils.isNewMessage(abilityBot.db(), upd),
                 Flag.DOCUMENT
         );
-        ReplyFlow pinFileReply = ReplyFlow.builder(abilityBot.db())
-                .onlyIf(upd -> DbUtils.isNewMessage(abilityBot.db(), upd))
-                .onlyIf(Flag.TEXT)
-                .action((bot, upd) -> {
-                    DbUtils.putNewMessage(bot.db(), upd);
-
-                    String materialName = upd.getMessage().getText();
-                    DbUtils.putMaterialNameToUserMap(bot.db(), AbilityUtils.getChatId(upd), materialName);
-
-                    bot.silent().execute(
-                            SendMessage.builder()
-                                    .text(MessageUtils.PIN_FILE)
-                                    .replyMarkup(KeyboardFactory.submitKeyboard())
-                                    .chatId(AbilityUtils.getChatId(upd))
-                                    .build()
-                    );
-                })
-                .next(offerMaterialResultReply)
-                .next(ReplyFactory.cancelReply())
-                .build();
-        ReplyFlow inputMaterialNameReply = ReplyFlow.builder(abilityBot.db())
-                .onlyIf(Flag.TEXT)
-                .onlyIf(upd -> DbUtils.isValidSubject(abilityBot.db(), AbilityUtils.getChatId(upd),
-                        upd.getMessage().getText()))
-                .action((bot, upd) -> {
-                    DbUtils.putNewMessage(bot.db(), upd);
-
-                    String subjectName = upd.getMessage().getText();
-                    DbUtils.putSubjectToUserMap(bot.db(), AbilityUtils.getChatId(upd), subjectName);
-
-                    bot.silent().execute(
-                            SendMessage.builder()
-                                    .text(MessageUtils.INPUT_MATERIAL_NAME)
-                                    .replyMarkup(KeyboardFactory.submitKeyboard())
-                                    .chatId(AbilityUtils.getChatId(upd))
-                                    .build()
-                    );
-                })
-                .next(pinFileReply)
-                .next(ReplyFactory.cancelReply())
-                .build();
         Reply noAdminsReply = Reply.of(
                 (bot, upd) -> bot.silent().send(MessageUtils.ADMINS_NOT_FOUND, AbilityUtils.getChatId(upd)),
                 upd -> userService.loadAllAdmins().isEmpty()
@@ -177,7 +136,7 @@ public class RegisteredUserRoleAbility
                         specializationService,
                         subjectService,
                         upd -> checkRole(AbilityUtils.getChatId(upd)) && !userService.loadAllAdmins().isEmpty(),
-                        inputMaterialNameReply
+                        ReplyFactory.inputMaterialReply(abilityBot.db(), offerMaterialResultReply)
                 ))
                 .next(noAdminsReply)
                 .next(noAccessReply())
