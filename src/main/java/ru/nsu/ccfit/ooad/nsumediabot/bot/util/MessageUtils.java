@@ -52,6 +52,8 @@ public class MessageUtils {
     public static final String USER_ALREADY_EXISTS = "Пользователь с таким email уже существует";
     public static final String MATERIAL_ALREADY_EXISTS = "Материал с таким названием уже существует";
     public static final String SENDING_LETTER_ERROR = "Не получилось отправить письмо на вашу почту";
+    public static final String FILE_TOO_BIG = "Файл должен быть не более 20 МБ";
+    public static final String EMAIL_NOT_VALID = "Необходим адрес электронной почты НГУ";
 
     public static final String SPECIALIZATION_TITLE = "Специальность";
     public static final String YEAR_TITLE = "Год обучения";
