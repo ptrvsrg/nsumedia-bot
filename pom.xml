@@ -6,6 +6,9 @@
     <properties>
         <java.version>17</java.version>
         <telegrambots.version>6.5.0</telegrambots.version>
+        <modelmapper.version>3.1.1</modelmapper.version>
+        <okhttp3.version>3.9.0</okhttp3.version>
+        <jackson.version>2.15.3</jackson.version>
     </properties>
 
     <parent>
