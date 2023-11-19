@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .token {
+            background-color: #eaeaea;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .note {
+            color: #999;
+        }
+
+        .command {
+            text-decoration-line: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Добро пожаловать на нашу платформу NSUMedia Bot</h1>
+            <p>Уважаемый <span th:text="${username}"></span>!</p>
+            <p>Спасибо, что присоединились к нам! Ниже указан ваш токен активации:</p>
+            <div class="token" th:text="${token}"></div>
+            <p class="note">Скопируйте этот токен и вставьте его в своего бота Telegram во время выполнения команды
+                <span class="command">/activate</span>, чтобы завершить процесс регистрации.</p>
+            <p>Спасибо!</p>
+</div>
+</body>
+</html>

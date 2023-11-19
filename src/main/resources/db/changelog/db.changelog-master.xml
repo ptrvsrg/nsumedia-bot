@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="0" author="ptrvsrg">
+        <sqlFile path="db/changelog/000_create_tables.sql" splitStatements="false"/>
+    </changeSet>
+    <changeSet id="1" author="ptrvsrg">
+        <sqlFile path="db/changelog/001_add_specializations.sql" splitStatements="false"/>
+    </changeSet>
+    <changeSet id="2" author="ptrvsrg">
+        <sqlFile path="db/changelog/002_add_subjects.sql" splitStatements="false"/>
+    </changeSet>
+</databaseChangeLog>
