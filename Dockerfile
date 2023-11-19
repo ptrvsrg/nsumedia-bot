@@ -18,5 +18,4 @@ COPY --from=corretto-jdk /jre $JAVA_HOME
 COPY --from=build /target/*.jar app.jar
 ENV JAVA_HOME=/jre
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
-EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
