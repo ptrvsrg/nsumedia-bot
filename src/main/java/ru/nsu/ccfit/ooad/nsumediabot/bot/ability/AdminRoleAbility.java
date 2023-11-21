@@ -17,6 +17,7 @@ import ru.nsu.ccfit.ooad.nsumediabot.bot.util.DbUtils;
 import ru.nsu.ccfit.ooad.nsumediabot.bot.util.KeyboardFactory;
 import ru.nsu.ccfit.ooad.nsumediabot.bot.util.MessageUtils;
 import ru.nsu.ccfit.ooad.nsumediabot.bot.util.ReplyFactory;
+import ru.nsu.ccfit.ooad.nsumediabot.material.disk.exception.DiskException;
 import ru.nsu.ccfit.ooad.nsumediabot.material.dto.MaterialDto;
 import ru.nsu.ccfit.ooad.nsumediabot.material.dto.SubjectDto;
 import ru.nsu.ccfit.ooad.nsumediabot.material.exception.MaterialAlreadyExistsException;
@@ -84,6 +85,8 @@ public class AdminRoleAbility
                         bot.silent().send(MessageUtils.SUCCESS_ADD_MATERIAL, AbilityUtils.getChatId(upd));
                     } catch (MaterialAlreadyExistsException e) {
                         bot.silent().send(MessageUtils.MATERIAL_ALREADY_EXISTS, AbilityUtils.getChatId(upd));
+                    } catch (DiskException e) {
+                        bot.silent().send(MessageUtils.DISK_ERROR, AbilityUtils.getChatId(upd));
                     }
 
                     materialFile.delete();
@@ -248,6 +251,10 @@ public class AdminRoleAbility
                         materialService.addMaterial(materialDto, materialFile);
                     } catch (MaterialAlreadyExistsException e) {
                         bot.silent().send(MessageUtils.MATERIAL_ALREADY_EXISTS, AbilityUtils.getChatId(upd));
+                        materialFile.delete();
+                        return;
+                    } catch (DiskException e) {
+                        bot.silent().send(MessageUtils.DISK_ERROR, AbilityUtils.getChatId(upd));
                         materialFile.delete();
                         return;
                     }
