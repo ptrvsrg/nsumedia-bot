@@ -20,7 +20,7 @@
 
     <groupId>ru.nsu.ccfit.nsumedia-bot</groupId>
     <artifactId>nsumedia-bot</artifactId>
-    <version>0.4.7</version>
+    <version>0.4.8</version>
     <packaging>jar</packaging>
 
     <name>NSUMedia Bot</name>
@@ -28,6 +28,7 @@
         Telegram bot that provides students with convenient access to educational materials organized by courses,
         semesters and disciplines
     </description>
+    <url>https://gitlab.ccfit.nsu.ru/ooad.2023/21211/nsumedia-bot</url>
 
     <developers>
         <developer>
