@@ -2,6 +2,24 @@
 
 ![NSUMedia Bot Logo](assets/nsumedia-bot-logo.png)
 
+<p align="center">
+   <a href="https://github.com/ptrvsrg/nsumedia-bot/graphs/contributors">
+        <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/ptrvsrg/nsumedia-bot?label=Contributors&labelColor=222222&color=77D4FC"/>
+   </a>
+   <a href="https://github.com/ptrvsrg/nsumedia-bot/forks">
+        <img alt="GitHub forks" src="https://img.shields.io/github/forks/ptrvsrg/nsumedia-bot?label=Forks&labelColor=222222&color=77D4FC"/>
+   </a>
+   <a href="https://github.com/ptrvsrg/nsumedia-bot/stargazers">
+        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ptrvsrg/nsumedia-bot?label=Stars&labelColor=222222&color=77D4FC"/>
+   </a>
+   <a href="https://github.com/ptrvsrg/nsumedia-bot/issues">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/ptrvsrg/nsumedia-bot?label=Issues&labelColor=222222&color=77D4FC"/>
+   </a>
+   <a href="https://github.com/ptrvsrg/nsumedia-bot/pulls">
+        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/ptrvsrg/nsumedia-bot?label=Pull%20Requests&labelColor=222222&color=77D4FC"/>
+   </a>
+</p>
+
 Добро пожаловать в репозиторий NSUMedia Bot! Это проект Telegram-бота, предоставляющего студентам удобный
 доступ к учебным материалам, организованным по специализациям, курсам, семестрам и предметам
 
