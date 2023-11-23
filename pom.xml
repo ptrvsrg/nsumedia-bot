@@ -20,7 +20,7 @@
 
     <groupId>ru.nsu.ccfit.nsumedia-bot</groupId>
     <artifactId>nsumedia-bot</artifactId>
-    <version>0.4.8</version>
+    <version>0.4.9</version>
     <packaging>jar</packaging>
 
     <name>NSUMedia Bot</name>
