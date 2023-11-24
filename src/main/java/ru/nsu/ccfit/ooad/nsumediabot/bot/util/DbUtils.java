@@ -153,7 +153,7 @@ public class DbUtils {
         } catch (NumberFormatException e) {
             return false;
         }
-        return years != null && year > 0 && year < years;
+        return years != null && year > 0 && year <= years;
     }
 
     public static boolean isValidSemester(String message) {
